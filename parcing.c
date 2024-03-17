@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/17 17:47:22 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:50:14 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ int parsing(char *str)
 {
     // (void)str;
     if (!is_cub(str))
-    {
-        printf("check '.cub'\n");
-        return (0);
-    }
+        return (printf("check '.cub'\n"), 0);
     // if (!check_line(str))
     //     return (printf("check file\n"), 0);
     return 1;
