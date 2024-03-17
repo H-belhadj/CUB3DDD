@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/17 18:07:20 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:12:32 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int ft_strcmp(const char *s1, const char *s2)
 {
-    while (*s1 && (*s1 == *s2)) {
+    while (*s1 && (*s1 == *s2))
+    {
         s1++;
         s2++;
     }
-
     return *(const unsigned char *)s1 - *(const unsigned char *)s2;
 }
 
@@ -60,7 +60,7 @@ int line_number(char *str)
     return (line);
 }
 
-char **read_line(char*str)
+char **read_line(char   *str)
 {
     int     i;
     int     fd;
@@ -84,13 +84,51 @@ char **read_line(char*str)
     return (store_all_map);
 }
 
+char **extract_6(char **file)
+{
+    char    **extract_6;
+    char *cur_char;
+    int is_all_white;
+    int i;
+    int j;
+    int y;
+    
+    extract_6 = malloc(sizeof(char *) * 6 + 1);
+    i = 0;
+    j = 0;
+    y = 0;
+    while(file[i] && y < 6)
+    {
+        is_all_white = 1;
+        cur_char = file[i];
+        while(*cur_char != 0)
+        {
+            if(*cur_char != ' ' && *cur_char != '\t' && *cur_char != '\n')
+            {
+                is_all_white = 0;
+                break;
+            }
+            cur_char++;
+        }
+        if (!is_all_white)
+        {
+            extract_6[j++] = strdup[i];
+            y++;
+        }
+        i++;
+    }
+    extract_6[j++] = 0;
+    return (extract_6);
+}
+
 
 int check_line(char *str)
 {
     char **file;
-    // char **line;
+    char **line;
 
-    file = read_line(str);
+    file = read_line(str);//read the lines of the file and stroed in an array
+    line = extract_6(file);
 
     return 1;
 }
