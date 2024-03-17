@@ -6,33 +6,80 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/17 20:12:32 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:45:07 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int ft_strcmp(const char *s1, const char *s2)
+// int ft_strcmp(const char *s1, const char *s2)
+// {
+//     while (*s1 && (*s1 == *s2))
+//     {
+//         s1++;
+//         s2++;
+//     }
+//     return *(const unsigned char *)s1 - *(const unsigned char *)s2;
+// }
+
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-    while (*s1 && (*s1 == *s2))
-    {
-        s1++;
-        s2++;
-    }
-    return *(const unsigned char *)s1 - *(const unsigned char *)s2;
+	unsigned char	*str1;
+	unsigned char	*str2;
+	size_t			i;
+
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (str1[i] && str2[i] && i < n - 1 && str1[i] == str2[i])
+		i++;
+	return (str1[i] - str2[i]);
 }
 
-int is_cub(char *str)
+char	*ft_strdup(char *s)
 {
-    if (ft_strcmp(str + (ft_strlen(str) - ft_strlen(".cub")), ".cub")
-		|| open(str, O_RDWR) < 0)
+	int		i;
+	char	*r;
+
+	i = 0;
+	r = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
+	if (!(r))
+		return (NULL);
+	while (*s)
 	{
-		printf("Error\nfile_err\n");
-		return (0);
+		r[i] = *s;
+		s++;
+		i++;
 	}
-    printf("Map Is Good 😇\n");
-	return (1);
+	r[i] = '\0';
+	return (r);
 }
+
+int        is_cub(char        *filename)
+{
+        char        *ext;
+
+        ext = ft_strchr(filename, '.');
+        if (ft_strlen(filename) < 5)
+                return(printf("invalid name\n"), 0);
+        if (ft_strncmp(ext, ".cub", 4) == 0 && ft_strlen(ext) == 4)
+        {
+            printf("filename is good\n");
+            return (1);
+        }
+        // return (printf("invalid file .cub"), 1);
+        return 0;
+}
+
+
+
+// int        main(int ac, char **av)
+// {
+//         if (ac != 2)
+//         return (printf("need 2 arguments"), -1);
 
 int line_number(char *str)
 {
@@ -44,10 +91,13 @@ int line_number(char *str)
     fd = open(str, O_RDONLY);
     line = 0;
     if (fd == -1)
-        return (perror("ERROR: opening file\n", -1));
+     {
+        perror("ERROR: opening file\n");       
+        return (-1);
+    }
     while((bytes_read = read(fd, &buffer, 1)) > 0)
     {
-        if(buffer == '\n');
+        if(buffer == '\n')
             line++;
     }
     if(bytes_read == -1)
@@ -87,11 +137,11 @@ char **read_line(char   *str)
 char **extract_6(char **file)
 {
     char    **extract_6;
-    char *cur_char;
-    int is_all_white;
-    int i;
-    int j;
-    int y;
+    char    *cur_char;
+    int     is_all_white;
+    int     i;
+    int     j;
+    int     y;
     
     extract_6 = malloc(sizeof(char *) * 6 + 1);
     i = 0;
@@ -112,7 +162,7 @@ char **extract_6(char **file)
         }
         if (!is_all_white)
         {
-            extract_6[j++] = strdup[i];
+            extract_6[j++] = ft_strdup(file[i]);
             y++;
         }
         i++;
