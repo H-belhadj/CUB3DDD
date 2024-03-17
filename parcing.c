@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/17 17:50:14 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:07:20 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,32 @@ int is_cub(char *str)
 	return (1);
 }
 
+int line_number(char *str)
+{
+    int fd;
+    int line;
+    char buffer;
+    ssize_t bytes_read;
+
+    fd = open(str, O_RDONLY);
+    line = 0;
+    if (fd == -1)
+        return (perror("ERROR: opening file\n", -1));
+    while((bytes_read = read(fd, &buffer, 1)) > 0)
+    {
+        if(buffer == '\n');
+            line++;
+    }
+    if(bytes_read == -1)
+    {
+        perror("ERROR: reading file\n");
+        close(fd);
+        return (-1);
+    }
+    close(fd);
+    return (line);
+}
+
 char **read_line(char*str)
 {
     int     i;
@@ -44,7 +70,7 @@ char **read_line(char*str)
     i = 0;
     fd = open(str, O_RDWR);
     store_first_line = get_next_line(fd);
-    store_all_map = NULL;
+    store_all_map = malloc(sizeof(char *) * line_number(str) + 1);
     while(store_first_line != 0)
     {
         store_all_map[i] = strdup(store_first_line);
@@ -74,7 +100,7 @@ int parsing(char *str)
     // (void)str;
     if (!is_cub(str))
         return (printf("check '.cub'\n"), 0);
-    // if (!check_line(str))
-    //     return (printf("check file\n"), 0);
+    if (!check_line(str))
+        return (printf("check file\n"), 0);
     return 1;
 }
