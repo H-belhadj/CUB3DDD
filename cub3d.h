@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/17 16:41:22 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:31:34 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <fcntl.h>
+#include "get_next_line.h"
 
 
 typedef struct s_value{
@@ -26,6 +27,10 @@ typedef struct s_value{
     char *total;
 }t_value;
 
+int is_cub(char *str);
+char **read_line(char*str);
+int check_line(char *str);
+int parsing(char *str);
 
 
 #endif

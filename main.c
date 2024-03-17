@@ -6,20 +6,27 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 23:46:29 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/16 22:54:33 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:48:45 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int main(int argc, char argv)
+int main(int argc, char **argv)
 {
-    if (argc == 2)
+    (void)argc;
+    if(argc != 2)
     {
-        if(parsing(argv[1]))
-            game();
+        printf("ERROR💩💩💩💩💩💩💩💩");
+        return (1);
     }
-    else
-        printf("error");
+    parsing(argv[1]);
+    // if (argc == 2)
+    // {
+        // if(parsing(argv[1]))
+            // game();
+    // }
+    // else
+    //     printf("error");
     return 0;
 }

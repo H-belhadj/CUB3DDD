@@ -1,9 +1,9 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror 
 NAME = cub3d
-SOURCES = get_next_line.c get_next_line_utils.c
+SOURCES = get_next_line.c get_next_line_utils.c main.c parcing.c
 OBJECTS = $(SOURCES:.c=.o)
-LIBS =  -lmlx -framework OpenGL -framework AppKit
+# LIBS =  -lmlx -framework OpenGL -framework AppKit
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
