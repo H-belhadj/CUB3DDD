@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 23:46:29 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/16 22:54:33 by hbelhadj         ###   ########.fr       */
+/*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
+/*   Updated: 2024/03/17 16:41:22 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#ifndef CUB3D_H
+# define CUB3D_H
 
-int main(int argc, char argv)
-{
-    if (argc == 2)
-    {
-        if(parsing(argv[1]))
-            game();
-    }
-    else
-        printf("error");
-    return 0;
-}
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+#include <fcntl.h>
+
+
+typedef struct s_value{
+    char    *str;
+    int     i;
+    int j;
+    char *total;
+}t_value;
+
+
+
+#endif

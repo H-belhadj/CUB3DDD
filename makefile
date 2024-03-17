@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g
-NAME = so_long
-SOURCES = get_next_line.c get_next_line_utils.c so_long.c so_long_utils.c update.c hook.c moves.c error_1.c error_2.c error_3.c utils_more.c
+NAME = cub3d
+SOURCES = get_next_line.c get_next_line_utils.c
 OBJECTS = $(SOURCES:.c=.o)
 LIBS =  -lmlx -framework OpenGL -framework AppKit
 %.o : %.c
@@ -17,7 +17,7 @@ OBJTS: $(SOURCES)
 	$(CC) $(CFLAGS) -c $^
 
 clean : 
-	@echo "\033[36mCleaning CUB3D....\033[0m"
+	@echo "\033[36mCleaning so_long....\033[0m"
 	@rm -rf $(OBJECTS)
 
 fclean : clean
