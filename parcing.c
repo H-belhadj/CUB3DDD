@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/17 20:45:07 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:21:32 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@
 //     }
 //     return *(const unsigned char *)s1 - *(const unsigned char *)s2;
 // }
+
+void    *free_(char **file)
+{
+    int i;
+
+    i = -1;
+    while (file[++i])
+        free(file[i]);
+    free (file);
+}
 
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -179,6 +189,8 @@ int check_line(char *str)
 
     file = read_line(str);//read the lines of the file and stroed in an array
     line = extract_6(file);
+    free_(file);
+    
 
     return 1;
 }
