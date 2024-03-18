@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/18 20:21:32 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:17:35 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,83 @@ char **extract_6(char **file)
     return (extract_6);
 }
 
+char *rest_(char *line, char *str)
+{
+    int i;//used as an index to traverse the input line.
+    char *rest;//store the extracted rest of the line and the first part of the line, respectively.
+    char *store;//store the extracted rest of the line and the first part of the line, respectively.
+    char *start;
+    
+    i = 0;
+    if(!line)
+        return (NULL);
+    //This while loop iterates through the input line until it finds a non-space or non-tab character.
+    while(line[i] && (line[i] == ' ' || line[i] == '\t'))
+        i++;
+    store = strdup(line + 1);//This line uses the strdup function to create a duplicate of the part of the line after skipping leading spaces or tabs. It starts copying from the position indicated by line + i, which is the first non-space or non-tab character
+    if(!store)
+        return (NULL);
+    if (strncmp(store, str, srtlen(str)) != 0)
+    {
+        free(store);
+        return (NULL);
+    }
+    start = strchr(store, ' ');
+    if (!start)
+        start = strchr(store, '\t');
+    if (!start)
+    {
+        free(store);
+        return (NULL);
+    }
+    rest = strdup(start);
+    free(store);
+    return (rest);
+}
+
+char *find_(char **line, char *target)
+{
+    int i;
+    char *cur_line;
+    char *line_ptr;
+    char *target_ptr;
+    
+    if(line == NULL || target == NULL)
+        return (NULL);
+    
+    i = 0;
+    while(line[i])
+    {
+        cur_line = line[i];
+        while(*cur_line)
+        {
+            if (*cur_line == *target)
+            {
+                line_ptr = cur_line;
+                target_ptr = target;
+                while (*target_ptr && *line_ptr == *target_ptr)
+                {
+                    line_ptr++;
+                    target_ptr++;
+                }
+                if(*target_ptr == '\0')
+                    return (line[i]);
+            }
+            cur_line++;
+        }  
+        i++;
+    }
+    return (NULL);
+}
+int paths(char **line)
+{
+    char *tmp;//used to store temporary values during path extraction
+    tmp = rest_(find_(line, "NO"), "NO");
+    if(!tmp)
+        return (0);
+    free(tmp);
+    return (1);
+}
 
 int check_line(char *str)
 {
