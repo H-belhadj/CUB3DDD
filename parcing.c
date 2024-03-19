@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/18 22:17:35 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/19 21:26:31 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void    *free_(char **file)
     while (file[++i])
         free(file[i]);
     free (file);
+    return (NULL);
 }
 
 
@@ -197,7 +198,7 @@ char *rest_(char *line, char *str)
     store = strdup(line + 1);//This line uses the strdup function to create a duplicate of the part of the line after skipping leading spaces or tabs. It starts copying from the position indicated by line + i, which is the first non-space or non-tab character
     if(!store)
         return (NULL);
-    if (strncmp(store, str, srtlen(str)) != 0)
+    if (strncmp(store, str, ft_strlen(str)) != 0)
     {
         free(store);
         return (NULL);
