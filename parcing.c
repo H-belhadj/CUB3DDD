@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/20 20:44:07 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:18:06 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,48 @@
 //     return *(const unsigned char *)s1 - *(const unsigned char *)s2;
 // }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_strdup(char *s)
+{
+	int		i;
+	char	*r;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	r = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!r)
+		return (NULL);
+	while (s[i])
+	{
+		r[i] = s[i];
+		i++;
+	}
+	r[i] = '\0';
+	return (r);
+}
+
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*results;
 
 	if (s == NULL)
-		return (ft_strdup("\0"));
-	if (start > ft_strlen(s))
+		return (NULL);
+	if (start >= ft_strlen(s))
 		return (ft_strdup(""));
-	i = 0;
 	if (len >= ft_strlen(s) - start)
-		results = (char *)malloc(sizeof(char) * ft_strlen(s) - start + 1);
+		results = (char *)malloc(sizeof(char) * (ft_strlen(s) - start + 1));
 	else
 		results = (char *)malloc(sizeof(char) * (len + 1));
 	if (!results)
 		return (NULL);
-	s = s + start;
-	while (s[i] && i < len)
+	i = 0;
+	while (s[start + i] && i < len)
 	{
-		results[i] = s[i];
+		results[i] = s[start + i];
 		i++;
 	}
-	*(results + i) = '\0';
+	results[i] = '\0';
 	return (results);
 }
 
@@ -60,7 +79,7 @@ void    *free_(char **file)
 }
 
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp( char *s1,  char *s2, size_t n)
 {
 	unsigned char	*str1;
 	unsigned char	*str2;
@@ -76,24 +95,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (str1[i] - str2[i]);
 }
 
-char	*ft_strdup(char *s)
-{
-	int		i;
-	char	*r;
 
-	i = 0;
-	r = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
-	if (!(r))
-		return (NULL);
-	while (*s)
-	{
-		r[i] = *s;
-		s++;
-		i++;
-	}
-	r[i] = '\0';
-	return (r);
-}
 
 int        is_cub(char        *filename)
 {
@@ -298,6 +300,8 @@ char *str_(char *str)
 int paths(char **line)
 {
     t_paths *paths_struct;
+
+    paths_struct = NULL;
     // Extract path associated with "NO"
     char *tmp = rest_(find_(line, "NO"), "NO");
     if (!tmp)
@@ -338,7 +342,7 @@ int check_line(char *str)
     line = extract_6(file);
     free_(file);
     if(!paths(line))
-        return (free_(line), 0);
+        return (free_(line), 1);
     return 1;
 }
 

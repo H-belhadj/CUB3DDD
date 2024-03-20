@@ -11,13 +11,13 @@ all : $(NAME)
 
 $(NAME): $(OBJECTS)
 	@$(CC) $(CFLAGS) $(OBJECTS) $(LIBS) -o $(NAME)
-	@echo "\033[1;32mDONE!\033[0m"
+	@echo "\033[1;32mDONE comp Cub3ddd!\033[0m"
 
 OBJTS: $(SOURCES)
 	$(CC) $(CFLAGS) -c $^
 
 clean : 
-	@echo "\033[36mCleaning so_long....\033[0m"
+	@echo "\033[36mCleaning Cub3ddd....\033[0m"
 	@rm -rf $(OBJECTS)
 
 fclean : clean
