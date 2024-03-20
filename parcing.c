@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/20 20:34:32 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:44:07 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,8 +295,9 @@ char *str_(char *str)
     return (ft_substr(str, j, i - j));
 }
 // Define the paths function
-int paths(char **line, t_paths *paths_struct)
+int paths(char **line)
 {
+    t_paths *paths_struct;
     // Extract path associated with "NO"
     char *tmp = rest_(find_(line, "NO"), "NO");
     if (!tmp)
