@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/20 17:47:47 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:57:29 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,7 +325,6 @@ int paths(char **line, t_paths *paths_struct)
                 free(paths_struct->path_we.string_value), 0);
     free(tmp);
     paths_struct->path_ea.string_value = str_(rest_(find_(line, "EA"), "EA"));
-
     return 1;
 }
 
@@ -337,6 +336,9 @@ int check_line(char *str)
     file = read_line(str);//read the lines of the file and stroed in an array
     line = extract_6(file);
     free_(file);
+    if(!paths(line))
+        return (free_(line), 0);
+
     
 
     return 1;
