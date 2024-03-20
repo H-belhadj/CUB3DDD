@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/20 17:57:29 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:34:32 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,9 +338,6 @@ int check_line(char *str)
     free_(file);
     if(!paths(line))
         return (free_(line), 0);
-
-    
-
     return 1;
 }
 

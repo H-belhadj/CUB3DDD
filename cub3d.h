@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/20 17:43:39 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:33:40 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 typedef struct s_value{
     int int_value;
     double double_value;
-    char *sting_value;
+    char *string_value;
 }t_value;
 
 // Define a struct to hold paths
