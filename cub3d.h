@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/20 00:51:53 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:43:39 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ typedef struct s_value{
     double double_value;
     char *sting_value;
 }t_value;
+
+// Define a struct to hold paths
+typedef struct s_paths {
+    t_value path_no;
+    t_value path_so;
+    t_value path_we;
+    t_value path_ea;
+} t_paths;
 
 typedef struct s_pars{
     char *path_no;

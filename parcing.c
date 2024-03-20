@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/20 00:57:43 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:47:47 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,32 @@
 //     }
 //     return *(const unsigned char *)s1 - *(const unsigned char *)s2;
 // }
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*results;
+
+	if (s == NULL)
+		return (ft_strdup("\0"));
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	i = 0;
+	if (len >= ft_strlen(s) - start)
+		results = (char *)malloc(sizeof(char) * ft_strlen(s) - start + 1);
+	else
+		results = (char *)malloc(sizeof(char) * (len + 1));
+	if (!results)
+		return (NULL);
+	s = s + start;
+	while (s[i] && i < len)
+	{
+		results[i] = s[i];
+		i++;
+	}
+	*(results + i) = '\0';
+	return (results);
+}
 
 void    *free_(char **file)
 {
@@ -266,19 +292,41 @@ char *str_(char *str)
         i++;
     if(i == j)
         return (NULL);
-    return (substr(str, j, i - j));
+    return (ft_substr(str, j, i - j));
 }
-int paths(char **line)
+// Define the paths function
+int paths(char **line, t_paths *paths_struct)
 {
-    char *tmp;//used to store temporary values during path extraction
-    t_value path_so;
-    tmp = rest_(find_(line, "NO"), "NO");
-    if(!tmp)
-        return (0);
-    path_so.sting_value = str_(rest_(find_(line, "SO"), "SO"));
-    
+    // Extract path associated with "NO"
+    char *tmp = rest_(find_(line, "NO"), "NO");
+    if (!tmp)
+        return 0;
     free(tmp);
-    return (1);
+    paths_struct->path_no.string_value = str_(rest_(find_(line, "NO"), "NO"));
+
+    // Extract path associated with "SO"
+    tmp = rest_(find_(line, "SO"), "SO");
+    if (!tmp)
+        return (free(paths_struct->path_no.string_value), 0);
+    free(tmp);
+    paths_struct->path_so.string_value = str_(rest_(find_(line, "SO"), "SO"));
+
+    // Extract path associated with "WE"
+    tmp = rest_(find_(line, "WE"), "WE");
+    if (!tmp)
+        return (free(paths_struct->path_no.string_value), free(paths_struct->path_so.string_value), 0);
+    free(tmp);
+    paths_struct->path_we.string_value = str_(rest_(find_(line, "WE"), "WE"));
+
+    // Extract path associated with "EA"
+    tmp = rest_(find_(line, "EA"), "EA");
+    if (!tmp)
+        return (free(paths_struct->path_no.string_value), free(paths_struct->path_so.string_value),
+                free(paths_struct->path_we.string_value), 0);
+    free(tmp);
+    paths_struct->path_ea.string_value = str_(rest_(find_(line, "EA"), "EA"));
+
+    return 1;
 }
 
 int check_line(char *str)
