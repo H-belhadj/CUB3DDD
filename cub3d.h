@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/17 17:31:34 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/20 00:51:53 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,25 @@
 
 
 typedef struct s_value{
-    char    *str;
-    int     i;
-    int j;
-    char *total;
+    int int_value;
+    double double_value;
+    char *sting_value;
 }t_value;
+
+typedef struct s_pars{
+    char *path_no;
+    char *path_we;
+    char *path_ea;
+    char *colorf;
+    char *colorc;
+    char **f;
+    char **c;
+    char **map;
+    char pos;
+    int x;
+    int y;
+}t_pars;
+
 
 int is_cub(char *str);
 char **read_line(char*str);

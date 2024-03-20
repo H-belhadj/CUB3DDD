@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/19 21:26:31 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/20 00:57:43 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,12 +250,33 @@ char *find_(char **line, char *target)
     }
     return (NULL);
 }
+char *str_(char *str)
+{
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    if(!str)
+        return (NULL);
+    while(str[i] && (str[i] == ' ' || str[i] == '\t'))
+        i++;
+    j = i;
+    while(str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
+        i++;
+    if(i == j)
+        return (NULL);
+    return (substr(str, j, i - j));
+}
 int paths(char **line)
 {
     char *tmp;//used to store temporary values during path extraction
+    t_value path_so;
     tmp = rest_(find_(line, "NO"), "NO");
     if(!tmp)
         return (0);
+    path_so.sting_value = str_(rest_(find_(line, "SO"), "SO"));
+    
     free(tmp);
     return (1);
 }
