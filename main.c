@@ -12,21 +12,21 @@
 
 #include "cub3d.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    (void)argc;
-    if(argc != 2)
-    {
-        printf("ERROR💩💩💩💩💩💩💩💩");
-        return (1);
-    }
-    parsing(argv[1]);
-    // if (argc == 2)
-    // {
-        // if(parsing(argv[1]))
-            // game();
-    // }
-    // else
-    //     printf("error");
-    return 0;
+	(void)argc;
+	if (argc != 2)
+	{
+		printf("ERROR💩💩💩💩💩💩💩💩");
+		return (1);
+	}
+	parsing(argv[1]);
+	// if (argc == 2)
+	// {
+	// if(parsing(argv[1]))
+	// game();
+	// }
+	// else
+	//     printf("error");
+	return (0);
 }

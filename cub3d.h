@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/20 20:33:40 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/21 21:06:41 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,28 @@
 #include "get_next_line.h"
 
 
-typedef struct s_value{
-    int int_value;
-    double double_value;
-    char *string_value;
-}t_value;
 
 // Define a struct to hold paths
 typedef struct s_paths {
-    t_value path_no;
-    t_value path_so;
-    t_value path_we;
-    t_value path_ea;
+    char	*path_no;
+	char	*path_so;
+	char	*path_we;
+	char	*path_ea;
+    char    *ex_color;
+	// char	*colorf;
+	// char	*colorc;
+	// char	**f;
+	// char	**c;
+	// char	**map;
+	// char	pos;
+	// int		x;
+	// int		y;
 } t_paths;
+
+typedef struct s_value{
+    t_paths pars;
+}           t_value;
+t_value     paths_struct;
 
 typedef struct s_pars{
     char *path_no;

@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/20 22:18:06 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/21 21:11:45 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,59 +299,77 @@ char *str_(char *str)
 // Define the paths function
 int paths(char **line)
 {
-    t_paths *paths_struct;
 
-    paths_struct = NULL;
     // Extract path associated with "NO"
     char *tmp = rest_(find_(line, "NO"), "NO");
     if (!tmp)
         return 0;
     free(tmp);
-    paths_struct->path_no.string_value = str_(rest_(find_(line, "NO"), "NO"));
+    paths_struct.pars.path_no = str_(rest_(find_(line, "NO"), "NO"));
 
     // Extract path associated with "SO"
     tmp = rest_(find_(line, "SO"), "SO");
     if (!tmp)
-        return (free(paths_struct->path_no.string_value), 0);
+        return (free(paths_struct.pars.path_no), 0);
     free(tmp);
-    paths_struct->path_so.string_value = str_(rest_(find_(line, "SO"), "SO"));
+    paths_struct.pars.path_so = str_(rest_(find_(line, "SO"), "SO"));
 
     // Extract path associated with "WE"
     tmp = rest_(find_(line, "WE"), "WE");
     if (!tmp)
-        return (free(paths_struct->path_no.string_value), free(paths_struct->path_so.string_value), 0);
+        return (free(paths_struct.pars.path_no), free(paths_struct.pars.path_so), 0);
     free(tmp);
-    paths_struct->path_we.string_value = str_(rest_(find_(line, "WE"), "WE"));
+    paths_struct.pars.path_we = str_(rest_(find_(line, "WE"), "WE"));
 
     // Extract path associated with "EA"
     tmp = rest_(find_(line, "EA"), "EA");
     if (!tmp)
-        return (free(paths_struct->path_no.string_value), free(paths_struct->path_so.string_value),
-                free(paths_struct->path_we.string_value), 0);
+        return (free(paths_struct.pars.path_no), free(paths_struct.pars.path_so),
+                free(paths_struct.pars.path_we), 0);
     free(tmp);
-    paths_struct->path_ea.string_value = str_(rest_(find_(line, "EA"), "EA"));
+    paths_struct.pars.path_ea = str_(rest_(find_(line, "EA"), "EA"));
     return 1;
+}
+int ex_color(char **line)
+{
+    char *tmp;
+
+    tmp = rest_(find_(line, "F"), "F");
+    if(!tmp)
+        return (0);
+    free(tmp);
+    paths_struct.pars.ex_color = str_(rest_(find_(line, "F"), "F"));
+    tmp = rest_(find_(line, "C"), "C");
+    if(!tmp)
+        return (free(paths_struct.pars.ex_color), 0);
+    free(tmp);
+    paths_struct.pars.ex_color = str_(rest_(find_(line, "C"), "C"));
+    return (1);
 }
 
 int check_line(char *str)
 {
     char **file;
     char **line;
+    // t_paths paths_struct;
 
     file = read_line(str);//read the lines of the file and stroed in an array
     line = extract_6(file);
-    free_(file);
+    // free_(file);
     if(!paths(line))
-        return (free_(line), 1);
-    return 1;
+        return (free_(line), 0);
+    if(!paths_struct.pars.path_ea || !paths_struct.pars.path_no || !paths_struct.pars.path_we || !paths_struct.pars.path_so)
+        return (free_(line), 0); 
+    if(!ex_color(line))
+        return (free_(line), free(paths_struct.pars.path_ea), free(paths_struct.pars.path_we), free(paths_struct.pars.path_so), free(paths_struct.pars.path_no), 0);   
+    return (free_(line), 1);
 }
 
 int parsing(char *str)
 {
-    // (void)str;
     if (!is_cub(str))
         return (printf("check '.cub'\n"), 0);
-    if (!check_line(str))
+    else if (!check_line(str))
         return (printf("check file\n"), 0);
     return 1;
 }
