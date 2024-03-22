@@ -6,24 +6,13 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/21 22:55:45 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/22 22:41:32 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// int ft_strcmp(const char *s1, const char *s2)
-// {
-//     while (*s1 && (*s1 == *s2))
-//     {
-//         s1++;
-//         s2++;
-//     }
-//     return *(const unsigned char *)s1 - *(const unsigned char *)s2;
-// }
 
-#define TRUE 1
-#define FALSE 0
 
 char	*ft_strdup(char *s)
 {
@@ -114,13 +103,6 @@ int        is_cub(char        *filename)
         }
         return 0;
 }
-
-
-
-// int        main(int ac, char **av)
-// {
-//         if (ac != 2)
-//         return (printf("need 2 arguments"), -1);
 
 int line_number(char *str)
 {
@@ -367,17 +349,17 @@ int ex_color(char **line)
         return (FALSE);
     }
     free(tmp);
-    paths_struct.pars.ex_color = str_(rest_(find_(line, "F"), "F"));
+    paths_struct.pars.F_color = str_(rest_(find_(line, "F"), "F"));
     tmp = rest_(find_(line, "C"), "C");
     if(!tmp)
     {
 
         // printf("CCCCCCCCC 1337");
-        return (free(paths_struct.pars.ex_color), FALSE);
+        return (free(paths_struct.pars.F_color), FALSE);
     }
     // printf("ERROR 1337");
     free(tmp);
-    paths_struct.pars.ex_color = str_(rest_(find_(line, "C"), "C"));
+    paths_struct.pars.C_color = str_(rest_(find_(line, "C"), "C"));
     // printf("ERROR 1337******");
     return (TRUE);
 }
@@ -392,19 +374,199 @@ int check_line(char *str)
     // free_(file);
 
     if(!paths(line))
+    {
+        // printf("==============LA FEVE=============\n");
         return (free_(line), FALSE);
+    }
+    
     if(!ex_color(line))
+    {
+        // printf("==============LA FEVE=============\n");
         return (free_(line), free(paths_struct.pars.path_ea), free(paths_struct.pars.path_we), free(paths_struct.pars.path_so), free(paths_struct.pars.path_no), FALSE);
-    printf("TEST 2: good💪🏻\n");
+    }
+    printf("TEST 2: good\n");
     return (free_(line), TRUE);
 }
+
+//<<============================check-colors-part======================>>
+
+int	ft_isdigit(int c)
+{
+	if (c >= 48 && c <= 57)
+		return (TRUE);
+	else
+		return (FALSE);
+}
+
+int	ft_count_world(char const *s, char c)
+{
+	int	i;
+	int	cnt;
+
+	i = 0;
+	cnt = 0;
+	while (s[i])
+	{
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+			cnt++;
+		i++;
+	}
+	return (cnt);
+}
+
+static	char	**ft_split_world(char  *s, char c)
+{
+	char	**dest;
+	int		i;
+	int		j;
+	int		simobb;
+
+	dest = malloc(sizeof(char *) * (ft_count_world(s, c) + 1));
+	if (!dest)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (j < ft_count_world(s, c))
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		simobb = 0;
+		while (s[i] && s[i] != c)
+		{
+			simobb++;
+			i++;
+		}
+		dest[j] = ft_substr(s, (i - simobb), simobb);
+		j++;
+	}
+	dest[j] = NULL;
+	return (dest);
+}
+
+char	**ft_split(char  *s, char c)
+{
+	char	**dest;
+
+	if (!s)
+		return (NULL);
+	dest = ft_split_world(s, c);
+	return (dest);
+}
+int digitcomma_(char *str)
+{
+    while(*str)
+    {
+        if(*str != ',' && !ft_isdigit(*str))
+            return (FALSE);   
+        str++;
+    }
+    return (TRUE);
+}
+int commas_(char *str)
+{
+    int cnt;
+
+    cnt = 0;
+    while(*str)
+    {
+        if(*str == ',')
+        {
+            cnt++;
+            if(cnt > 2)
+                return (FALSE);
+        }
+        str++;
+    }
+    return (cnt == 2);
+}
+
+int	ft_atoi(const char *str)
+{
+	int	r;
+	int	sign;
+	int	i;
+
+	r = 0;
+	sign = 1;
+	i = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == 32))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign *= -1;
+		i++;
+	}	
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		r = (r * 10) + (str[i] - 48);
+		i++;
+	}
+	return (r * sign);
+}
+
+int length_(char **str)
+{
+    int i;
+    int len;
+    int num;
+    
+    i = -1;
+    while(str[++i])
+    {
+        len = 0;
+        while(str[i][len] != '\0')
+            len++;
+        if(len < 1 || len > 3)
+            return (FALSE);
+        num = ft_atoi(str[i]);
+        if(num < 0 || num > 255)
+            return (FALSE);
+    }
+    return (TRUE);
+}
+
+int check_colors(void)
+{
+    int i;
+
+    i = 0;
+    if(!paths_struct.pars.C_color || !paths_struct.pars.C_color)
+        return (FALSE);
+    if(!digitcomma_(paths_struct.pars.C_color )|| !digitcomma_(paths_struct.pars.F_color))
+        return (FALSE);
+    if(!commas_(paths_struct.pars.C_color) && commas_(paths_struct.pars.F_color))
+        return (free(paths_struct.pars.F_color), FALSE); 
+    if(!commas_(paths_struct.pars.F_color) && commas_(paths_struct.pars.C_color))
+        return (free(paths_struct.pars.C_color), FALSE);
+    if(!commas_(paths_struct.pars.F_color) && !commas_(paths_struct.pars.C_color))
+        return (FALSE);
+    paths_struct.pars.c = ft_split(paths_struct.pars.C_color, ',');
+    paths_struct.pars.f = ft_split(paths_struct.pars.F_color, ',');
+    free(paths_struct.pars.C_color);
+    free(paths_struct.pars.F_color);
+    if(!length_(paths_struct.pars.c) || !length_(paths_struct.pars.f))
+        return (FALSE);
+    printf("TEST 3: good💪\n");
+    return (TRUE);
+}
+
+
+
+
+//<<============================check-colors-part======================>>
 
 int parsing(char *str)
 {
     if (!is_cub(str))
-        return (printf("check '.cub'\n"), 0);
+        return (printf("TEST 1: BAD\n"), FALSE);
+    sleep(1);
     if (!check_line(str))
-        return (printf("check file\n"), FALSE);
+        return (printf("TEST 2: BAD\n"), FALSE);
+    sleep(1);
+    if (!check_colors())
+        return (printf("TEST 3: BAD\n"), FALSE);
+
     // printf("code error : %d\n", check_line(str));
-    return 1;
+    return (TRUE);
 }

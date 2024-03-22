@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/21 21:06:41 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/22 20:43:10 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,11 @@ typedef struct s_paths {
 	char	*path_so;
 	char	*path_we;
 	char	*path_ea;
-    char    *ex_color;
-	// char	*colorf;
-	// char	*colorc;
-	// char	**f;
-	// char	**c;
-	// char	**map;
-	// char	pos;
-	// int		x;
-	// int		y;
+    char *ex_color;
+    char    *C_color;
+    char    *F_color;
+    char    **f;
+    char    **c;
 } t_paths;
 
 typedef struct s_value{
@@ -43,19 +39,10 @@ typedef struct s_value{
 }           t_value;
 t_value     paths_struct;
 
-typedef struct s_pars{
-    char *path_no;
-    char *path_we;
-    char *path_ea;
-    char *colorf;
-    char *colorc;
-    char **f;
-    char **c;
-    char **map;
-    char pos;
-    int x;
-    int y;
-}t_pars;
+
+
+#define TRUE 1
+#define FALSE 0
 
 
 int is_cub(char *str);
