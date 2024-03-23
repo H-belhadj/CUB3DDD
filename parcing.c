@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/22 22:41:32 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:39:47 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,31 +107,31 @@ int        is_cub(char        *filename)
 int line_number(char *str)
 {
     int fd;
-    int line;
-    char buffer;
-    ssize_t bytes_read;
+    int cnt;
+    char *string;
 
-    fd = open(str, O_RDONLY);
-    line = 0;
+    fd = open(str, O_RDWR);
     if (fd == -1)
-     {
-        perror("ERROR: opening file\n");       
-        return (-1);
-    }
-    while((bytes_read = read(fd, &buffer, 1)) > 0)
     {
-        if(buffer == '\n')
-            line++;
+        // Error opening file
+        perror("Error opening file");
+        return -1; // Indicate error
     }
-    if(bytes_read == -1)
+
+    cnt = 1;
+    string = get_next_line(fd);
+    while (string)
     {
-        perror("ERROR: reading file\n");
-        close(fd);
-        return (-1);
+        cnt++;
+        free(string);
+        string = get_next_line(fd);
     }
+    free(string);
     close(fd);
-    return (line);
+
+    return cnt;
 }
+
 
 char **read_line(char   *str)
 {
