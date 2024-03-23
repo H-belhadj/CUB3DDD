@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/23 18:18:58 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/23 21:51:35 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int        is_cub(char        *filename)
                 return(printf("invalid name\n"), 0);
         if (ft_strncmp(ext, ".cub", 4) == 0 && ft_strlen(ext) == 4)
         {
-            printf("TEST 1: good💪🏻\n");
+            printf("TEST 1: good💪\n");
             return (1);
         }
         return 0;
@@ -296,46 +296,28 @@ char *str_(char *str)
 // Define the paths function
 int paths(char **line)
 {
-    paths_struct.pars.path_ea = NULL;
-    paths_struct.pars.path_no = NULL;
-    paths_struct.pars.path_we = NULL;
-    paths_struct.pars.path_so = NULL;
-
-    // Extract path associated with "NO"
+    bzero(paths_struct.pars.textures, sizeof(char *) * 4);
     char *tmp = rest_(find_(line, "NO"), "NO");
     if (!tmp)
-    {
-        // printf("ERROR 1337\n");
         return FALSE;
-    }
     free(tmp);
-    paths_struct.pars.path_no = str_(rest_(find_(line, "NO"), "NO"));
-    // printf("%s------>\n", paths_struct.pars.path_no);
-
-    // Extract path associated with "SO"
+    paths_struct.pars.textures[NO] = str_(rest_(find_(line, "NO"), "NO"));
     tmp = rest_(find_(line, "SO"), "SO");
     if (!tmp)
-        return (free(paths_struct.pars.path_no), FALSE);
+        return (free(paths_struct.pars.textures[NO]), FALSE);
     free(tmp);
-    paths_struct.pars.path_so = str_(rest_(find_(line, "SO"), "SO"));
-    // printf("%s------>\n", paths_struct.pars.path_so);
-
-    // Extract path associated with "WE"
+    paths_struct.pars.textures[SO] = str_(rest_(find_(line, "SO"), "SO"));
     tmp = rest_(find_(line, "WE"), "WE");
     if (!tmp)
-        return (free(paths_struct.pars.path_no), free(paths_struct.pars.path_so), FALSE);
+        return (free(paths_struct.pars.textures[NO]), free(paths_struct.pars.textures[SO]), FALSE);
     free(tmp);
-    paths_struct.pars.path_we = str_(rest_(find_(line, "WE"), "WE"));
-    // printf("%s------>\n", paths_struct.pars.path_we);
-
-    // Extract path associated with "EA"
+    paths_struct.pars.textures[WE] = str_(rest_(find_(line, "WE"), "WE"));
     tmp = rest_(find_(line, "EA"), "EA");
     if (!tmp)
-        return (free(paths_struct.pars.path_no), free(paths_struct.pars.path_so),
-                free(paths_struct.pars.path_we), FALSE);
+        return (free(paths_struct.pars.textures[NO]), free(paths_struct.pars.textures[SO]),
+                free(paths_struct.pars.textures[WE]), FALSE);
     free(tmp);
-    // printf("%s------>\n", paths_struct.pars.path_ea);
-    paths_struct.pars.path_ea = str_(rest_(find_(line, "EA"), "EA"));
+    paths_struct.pars.textures[EA] = str_(rest_(find_(line, "EA"), "EA"));
     return TRUE;
 }
 int ex_color(char **line)
@@ -371,20 +353,12 @@ int check_line(char *str)
 
     file = read_line(str);//read the lines of the file and stroed in an array
     line = extract_6(file);
-    // free_(file);
-
+    free_(file);
     if(!paths(line))
-    {
-        // printf("==============LA FEVE=============\n");
         return (free_(line), FALSE);
-    }
-    
     if(!ex_color(line))
-    {
-        // printf("==============LA FEVE=============\n");
-        return (free_(line), free(paths_struct.pars.path_ea), free(paths_struct.pars.path_we), free(paths_struct.pars.path_so), free(paths_struct.pars.path_no), FALSE);
-    }
-    printf("TEST 2: good\n");
+        return (free_(line), free(paths_struct.pars.textures[EA]), free(paths_struct.pars.textures[WE]), free(paths_struct.pars.textures[SO]), free(paths_struct.pars.textures[NO]), FALSE);
+    printf("TEST 2: good💪\n");
     return (free_(line), TRUE);
 }
 
@@ -554,38 +528,31 @@ int check_colors(void)
 
 
 
-//<<============================check-colors-part======================>>
-int accessible(void)
+// //<<============================check-colors-part======================>>
+
+
+// //<<============================check-access======================>>
+int accessible()
 {
     int	fd;
+    int i;
 
-	fd = open(paths_struct.pars.path_ea, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	close(fd);
-	fd = open(paths_struct.pars.path_so, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	close(fd);
-	fd = open(paths_struct.pars.path_no, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	close(fd);
-	fd = open(paths_struct.pars.path_we, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	close(fd);
-	return (1);
+    i = -1;
+    while (paths_struct.pars.textures[i])
+    {
+        fd = open(paths_struct.pars.textures[i], O_RDONLY);
+        if (fd < 0)
+		    return (FALSE);
+        close(fd);
+    }
+    printf("TEST 4: good💪\n");
+	return (TRUE);
 }
-
-//<<============================check-access======================>>
-
-
-
 //<<============================check-access======================>>
 
 int parsing(char *str)
 {
+    // (void)str;
     if (!is_cub(str))
         return (printf("TEST 1: BAD\n"), FALSE);
     sleep(1);
