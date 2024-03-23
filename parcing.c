@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/23 00:40:57 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:18:58 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -555,6 +555,34 @@ int check_colors(void)
 
 
 //<<============================check-colors-part======================>>
+int accessible(void)
+{
+    int	fd;
+
+	fd = open(paths_struct.pars.path_ea, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	close(fd);
+	fd = open(paths_struct.pars.path_so, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	close(fd);
+	fd = open(paths_struct.pars.path_no, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	close(fd);
+	fd = open(paths_struct.pars.path_we, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	close(fd);
+	return (1);
+}
+
+//<<============================check-access======================>>
+
+
+
+//<<============================check-access======================>>
 
 int parsing(char *str)
 {
@@ -566,6 +594,9 @@ int parsing(char *str)
     sleep(1);
     if (!check_colors())
         return (printf("TEST 3: BAD\n"), FALSE);
+    sleep(1);
+    if(!accessible())
+        return (printf("TEST 4: BAD\n"), FALSE);
 
     // printf("code error : %d\n", check_line(str));
     return (TRUE);
