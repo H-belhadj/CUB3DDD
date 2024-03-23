@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/23 21:42:46 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/23 22:34:58 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_paths {
 	char	*path_we;
 	char	*path_ea;
     char    *textures[4];
-    char *ex_color;
+    char    *ex_color;
     char    *C_color;
     char    *F_color;
     char    **f;
@@ -57,6 +57,7 @@ int is_cub(char *str);
 char **read_line(char*str);
 int check_line(char *str);
 int parsing(char *str);
+int accessible();
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/23 21:51:35 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/23 22:35:41 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,9 +217,7 @@ char *rest_(char *line, char *str)
         i++;
     store = strdup(line + 1);//This line uses the strdup function to create a duplicate of the part of the line after skipping leading spaces or tabs. It starts copying from the position indicated by line + i, which is the first non-space or non-tab character
     if(!store)
-    {
         return (NULL);
-    }
     // if (ft_strncmp(store, str, ft_strlen(str)) != 0)
     // {
     //     printf("*********42\n");
@@ -326,23 +324,14 @@ int ex_color(char **line)
 
     tmp = rest_(find_(line, "F"), "F");
     if(!tmp)
-    {
-        // printf("FFFFFFFFFF 1337");
         return (FALSE);
-    }
     free(tmp);
     paths_struct.pars.F_color = str_(rest_(find_(line, "F"), "F"));
     tmp = rest_(find_(line, "C"), "C");
     if(!tmp)
-    {
-
-        // printf("CCCCCCCCC 1337");
         return (free(paths_struct.pars.F_color), FALSE);
-    }
-    // printf("ERROR 1337");
     free(tmp);
     paths_struct.pars.C_color = str_(rest_(find_(line, "C"), "C"));
-    // printf("ERROR 1337******");
     return (TRUE);
 }
 
@@ -552,7 +541,6 @@ int accessible()
 
 int parsing(char *str)
 {
-    // (void)str;
     if (!is_cub(str))
         return (printf("TEST 1: BAD\n"), FALSE);
     sleep(1);
@@ -564,7 +552,5 @@ int parsing(char *str)
     sleep(1);
     if(!accessible())
         return (printf("TEST 4: BAD\n"), FALSE);
-
-    // printf("code error : %d\n", check_line(str));
     return (TRUE);
 }
