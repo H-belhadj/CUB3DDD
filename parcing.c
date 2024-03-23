@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/23 00:39:47 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:40:57 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int line_number(char *str)
     {
         // Error opening file
         perror("Error opening file");
-        return -1; // Indicate error
+        return FALSE; // Indicate error
     }
 
     cnt = 1;
