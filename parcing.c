@@ -6,12 +6,17 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/23 22:35:41 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:41:00 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+
+bool ft_isspace(char c)
+{
+    return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v');
+}
 
 
 char	*ft_strdup(char *s)
@@ -188,8 +193,6 @@ char **extract_6(char **file)
         if (!is_all_white)
         {
             extract_6[j++] = ft_strdup(file[i]);
-            // printf("<====== %s =====>\n", extract_6[j++]);
-            // printf("<====== %d =====>\n", j++);
             y++;
         }
         i++;
@@ -538,6 +541,108 @@ int accessible()
 	return (TRUE);
 }
 //<<============================check-access======================>>
+//<<============================check-map======================>>
+
+int whitespaces_(const char *str)
+{
+    while(*str)
+    {
+        if(!ft_isspace((unsigned char) *str))
+            return TRUE;
+        str++;
+    }       
+    return FALSE;
+}
+
+int skip_(char **file)
+{
+    int i;
+    int j;
+    int cnt;
+     
+    i = -1;
+    cnt = 0;
+    while(file[++i] && cnt < 6)
+    {
+        j = -1;
+        while(file[i][++j] != '\0')
+            if(file[i][j] != ' ' && file[i][j] != '\t' && file[i][j] != '\n')
+                break;
+        if(file[i][j] == '\0')
+            if(j > 0)
+                cnt++;
+        else
+            cnt++;
+    }
+    while(file[i] && file[i][0] != '\0' && file[i][0] != '\n')
+    {
+        j = -1;
+        while(file[i][++j] != '\0')
+            if (file[i][j] != ' ' && file[i][j] != '\t' && file[i][j] != '\n')
+                break;
+        if(file[i][j] == '\0')
+            i++;
+        else
+            break;
+    }
+    return (i);
+}
+
+int end_(char **file, char *str)
+{
+    int num;
+
+    num = line_number(str);
+    num--;
+    while(num > -1 && whitespaces_(file[num]))
+        num--;
+    return num;
+}
+
+void take_maps(char **file, char *str)
+{
+    int i;
+    int j;
+    int n;
+
+    i = skip_(file);
+    paths_struct.pars.map = malloc(sizeof(char *) * ((line_number(str) - i) + 1));
+    j = 0;
+    n = 0;
+    while(file[i] && i <= end_(file, str))
+    {
+        paths_struct.pars.map[j] = ft_strdup(file[i]);
+        j++;
+        i++;
+    }
+    paths_struct.pars.map[j] = NULL;
+    free_(file);
+}
+
+int empty_()
+{
+    int i;
+
+    i = 0;
+    while(paths_struct.pars.map[i])
+    {
+        if(whitespaces_(paths_struct.pars.map[i]));
+            return (FALSE);
+        i++;
+    }
+    return(TRUE);
+}
+
+int map_(char *str)
+{
+    take_maps(read_line(str), str);
+    if(!empty_)
+        return (FALSE);
+    
+}
+
+//<<============================check-map======================>>
+
 
 int parsing(char *str)
 {
@@ -551,6 +656,8 @@ int parsing(char *str)
         return (printf("TEST 3: BAD\n"), FALSE);
     sleep(1);
     if(!accessible())
+        return (printf("TEST 4: BAD\n"), FALSE);
+    if(!map_(str))
         return (printf("TEST 4: BAD\n"), FALSE);
     return (TRUE);
 }

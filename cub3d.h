@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/23 22:34:58 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:28:32 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <fcntl.h>
+#include <stdbool.h>
 #include "get_next_line.h"
 
 
@@ -40,6 +41,7 @@ typedef struct s_paths {
     char    *F_color;
     char    **f;
     char    **c;
+    char    **map;
 } t_paths;
 
 typedef struct s_value{
