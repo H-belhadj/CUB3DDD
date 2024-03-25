@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/25 20:19:50 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:28:13 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -635,6 +635,26 @@ int empty_()
     return(TRUE);
 }
 
+
+void position_()
+{
+    int i, j;
+    i = -1;
+    while(paths_struct.pars.map[++i])
+    {
+        j = -1;
+        while(paths_struct.pars.map[i][++j])
+        {
+            if(paths_struct.pars.map[i][j] == 'N' && paths_struct.pars.map[i][j] == 'S' && paths_struct.pars.map[i][j] == 'E' && paths_struct.pars.map[i][j] == 'W')
+            {
+                paths_struct.pars.player_row = i;
+                paths_struct.pars.player_col = j;
+                return;
+            }
+        }
+    }
+}
+
 int p_num()
 {
     int i, j, cnt;
@@ -705,6 +725,8 @@ int map_(char *str)
         return (FALSE);
     if(!content_())
         return (FALSE);
+    position_();
+    
     
     return (TRUE);
     
