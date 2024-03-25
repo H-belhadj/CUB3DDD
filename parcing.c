@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/24 21:41:00 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:19:50 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -569,10 +569,12 @@ int skip_(char **file)
             if(file[i][j] != ' ' && file[i][j] != '\t' && file[i][j] != '\n')
                 break;
         if(file[i][j] == '\0')
+        {
             if(j > 0)
                 cnt++;
-        else
-            cnt++;
+            else
+               cnt++;
+        }
     }
     while(file[i] && file[i][0] != '\0' && file[i][0] != '\n')
     {
@@ -626,18 +628,85 @@ int empty_()
     i = 0;
     while(paths_struct.pars.map[i])
     {
-        if(whitespaces_(paths_struct.pars.map[i]));
+        if(whitespaces_(paths_struct.pars.map[i]))
             return (FALSE);
         i++;
     }
     return(TRUE);
 }
 
+int p_num()
+{
+    int i, j, cnt;
+    i = -1;
+    cnt = 0;
+    while(paths_struct.pars.map[++i])
+    {
+        j = -1;
+        while(paths_struct.pars.map[i][++j])
+        {
+            if (paths_struct.pars.map[i][j] == 'N' && paths_struct.pars.map[i][j] == 'S' && paths_struct.pars.map[i][j] == 'E' && paths_struct.pars.map[i][j] == 'W')
+                cnt++;
+        }
+    }
+    if(cnt != 1)
+        return (FALSE);
+    else
+        return(TRUE);
+}
+
+int existance_(char p)
+{
+    int i, j, cnt;
+    i = -1;
+    cnt = 0;
+    while(paths_struct.pars.map[++i])
+    {
+        j = -1;
+        while(paths_struct.pars.map[i][++j])
+        {
+            if(paths_struct.pars.map[i][j] == p)
+                cnt++;
+        }
+    }
+    if(!cnt)
+        return (FALSE);
+    else
+        return (TRUE);
+}
+
+
+int content_()
+{
+    int i;
+    int j;
+    
+    i = -1;
+    while(paths_struct.pars.map[++i])
+    {
+        j = -1;
+        while(paths_struct.pars.map[i][++j])
+        {
+            if(paths_struct.pars.map[i][j] != '0' && paths_struct.pars.map[i][j] != '1' && paths_struct.pars.map[i][j] != '\n' && paths_struct.pars.map[i][j] != 'N' && paths_struct.pars.map[i][j] != 'S' && paths_struct.pars.map[i][j] != 'E' && paths_struct.pars.map[i][j] != 'W' && paths_struct.pars.map[i][j] != ' ')
+                return (FALSE);
+        }
+    }
+        if(!p_num())
+            return (FALSE);
+        if (!existance_('0') || !existance_('1') || !existance_('\n'))
+            return (FALSE);
+        return (TRUE);
+}
+
 int map_(char *str)
 {
     take_maps(read_line(str), str);
-    if(!empty_)
+    if(!empty_())
         return (FALSE);
+    if(!content_())
+        return (FALSE);
+    
+    return (TRUE);
     
 }
 
@@ -658,6 +727,6 @@ int parsing(char *str)
     if(!accessible())
         return (printf("TEST 4: BAD\n"), FALSE);
     if(!map_(str))
-        return (printf("TEST 4: BAD\n"), FALSE);
+        return (printf("TEST 5: BAD\n"), FALSE);
     return (TRUE);
 }
