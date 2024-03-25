@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/25 20:28:13 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:40:18 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -556,37 +556,23 @@ int whitespaces_(const char *str)
 
 int skip_(char **file)
 {
+
     int i;
-    int j;
     int cnt;
      
     i = -1;
     cnt = 0;
     while(file[++i] && cnt < 6)
     {
-        j = -1;
-        while(file[i][++j] != '\0')
-            if(file[i][j] != ' ' && file[i][j] != '\t' && file[i][j] != '\n')
-                break;
-        if(file[i][j] == '\0')
-        {
-            if(j > 0)
-                cnt++;
-            else
-               cnt++;
-        }
-    }
-    while(file[i] && file[i][0] != '\0' && file[i][0] != '\n')
-    {
-        j = -1;
-        while(file[i][++j] != '\0')
-            if (file[i][j] != ' ' && file[i][j] != '\t' && file[i][j] != '\n')
-                break;
-        if(file[i][j] == '\0')
-            i++;
+
+        if(whitespaces_(file[i]))
+            cnt++;
         else
             break;
     }
+                printf("lalalalalala\n");
+    while(file[i] && whitespaces_(file[i]))
+        i++;
     return (i);
 }
 
@@ -737,17 +723,18 @@ int map_(char *str)
 
 int parsing(char *str)
 {
-    if (!is_cub(str))
-        return (printf("TEST 1: BAD\n"), FALSE);
-    sleep(1);
-    if (!check_line(str))
-        return (printf("TEST 2: BAD\n"), FALSE);
-    sleep(1);
-    if (!check_colors())
-        return (printf("TEST 3: BAD\n"), FALSE);
-    sleep(1);
-    if(!accessible())
-        return (printf("TEST 4: BAD\n"), FALSE);
+    // if (!is_cub(str))
+    //     return (printf("TEST 1: BAD\n"), FALSE);
+    // sleep(1);
+    // if (!check_line(str))
+    //     return (printf("TEST 2: BAD\n"), FALSE);
+    // sleep(1);
+    // if (!check_colors())
+    //     return (printf("TEST 3: BAD\n"), FALSE);
+    // sleep(1);
+    // if(!accessible())
+    //     return (printf("TEST 4: BAD\n"), FALSE);
+    // sleep(1);
     if(!map_(str))
         return (printf("TEST 5: BAD\n"), FALSE);
     return (TRUE);

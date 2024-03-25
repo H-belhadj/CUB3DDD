@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 NAME = cub3d
 SOURCES = get_next_line.c get_next_line_utils.c main.c parcing.c
 OBJECTS = $(SOURCES:.c=.o)
