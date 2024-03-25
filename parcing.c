@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/25 20:40:18 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:13:30 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ char **extract_6(char **file)
     int     j;
     int     y;
     
-    extract_6 = malloc(sizeof(char *) * 6 + 1);
+    extract_6 = malloc(sizeof(char *) * (6 + 1));
     i = 0;
     j = 0;
     y = 0;
@@ -197,7 +197,11 @@ char **extract_6(char **file)
         }
         i++;
     }
-    extract_6[j++] = 0;
+    printf("%d----\n", j);
+    extract_6[j] = 0;
+    for (int x = 0; extract_6[x]; x++) {
+        printf("%s --- %d\n", extract_6[x], j);
+    }
     return (extract_6);
 }
 
@@ -210,6 +214,7 @@ char *rest_(char *line, char *str)
 
     (void)str;
     
+
     i = 0;
     if(!line)
     {
@@ -245,9 +250,8 @@ char *rest_(char *line, char *str)
 char *find_(char **line, char *target)
 {
     int i;
-    char *cur_line;
-    char *line_ptr;
-    char *target_ptr;
+    // char *line_ptr;
+    // char *target_ptr;
     
     if(line == NULL || target == NULL)
         return (NULL);
@@ -255,23 +259,11 @@ char *find_(char **line, char *target)
     i = 0;
     while(line[i])
     {
-        cur_line = line[i];
-        while(*cur_line)
-        {
-            if (*cur_line == *target)
-            {
-                line_ptr = cur_line;
-                target_ptr = target;
-                while (*target_ptr && *line_ptr == *target_ptr)
-                {
-                    line_ptr++;
-                    target_ptr++;
-                }
-                if(*target_ptr == '\0')
-                    return (line[i]);
-            }
-            cur_line++;
-        }  
+        // printf("%s\n\n", line[i]);
+        if (strncmp(line[i], target, strlen(target)) == 0) {
+            // printf("WIK WIK %s\n\n", line[i]);
+            return line[i];
+        }
         i++;
     }
     return (NULL);
@@ -324,13 +316,14 @@ int paths(char **line)
 int ex_color(char **line)
 {
     char *tmp;
-
+    
     tmp = rest_(find_(line, "F"), "F");
     if(!tmp)
         return (FALSE);
     free(tmp);
     paths_struct.pars.F_color = str_(rest_(find_(line, "F"), "F"));
     tmp = rest_(find_(line, "C"), "C");
+    
     if(!tmp)
         return (free(paths_struct.pars.F_color), FALSE);
     free(tmp);
@@ -570,7 +563,7 @@ int skip_(char **file)
         else
             break;
     }
-                printf("lalalalalala\n");
+    printf("lalalalalala\n");
     while(file[i] && whitespaces_(file[i]))
         i++;
     return (i);
@@ -723,18 +716,18 @@ int map_(char *str)
 
 int parsing(char *str)
 {
-    // if (!is_cub(str))
-    //     return (printf("TEST 1: BAD\n"), FALSE);
-    // sleep(1);
-    // if (!check_line(str))
-    //     return (printf("TEST 2: BAD\n"), FALSE);
-    // sleep(1);
-    // if (!check_colors())
-    //     return (printf("TEST 3: BAD\n"), FALSE);
-    // sleep(1);
-    // if(!accessible())
-    //     return (printf("TEST 4: BAD\n"), FALSE);
-    // sleep(1);
+    if (!is_cub(str))
+        return (printf("TEST 1: BAD\n"), FALSE);
+    sleep(1);
+    if (!check_line(str))
+        return (printf("TEST 2: BAD\n"), FALSE);
+    sleep(1);
+    if (!check_colors())
+        return (printf("TEST 3: BAD\n"), FALSE);
+    sleep(1);
+    if(!accessible())
+        return (printf("TEST 4: BAD\n"), FALSE);
+    sleep(1);
     if(!map_(str))
         return (printf("TEST 5: BAD\n"), FALSE);
     return (TRUE);
