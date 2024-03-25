@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/25 21:13:30 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/25 23:27:02 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,11 +197,7 @@ char **extract_6(char **file)
         }
         i++;
     }
-    printf("%d----\n", j);
     extract_6[j] = 0;
-    for (int x = 0; extract_6[x]; x++) {
-        printf("%s --- %d\n", extract_6[x], j);
-    }
     return (extract_6);
 }
 
@@ -228,9 +224,9 @@ char *rest_(char *line, char *str)
         return (NULL);
     // if (ft_strncmp(store, str, ft_strlen(str)) != 0)
     // {
-    //     printf("*********42\n");
-    //     printf("store : %s\n", store);
-    //     printf("str : %s\n", str);
+    // //     printf("*********42\n");
+    // //     printf("store : %s\n", store);
+    // //     printf("str : %s\n", str);
     //     free(store);
     //     return (NULL);
     // }
@@ -696,6 +692,58 @@ int content_()
             return (FALSE);
         return (TRUE);
 }
+int len_map()
+{
+    int i;
+    
+    i = 0;
+    while(paths_struct.pars.map[i])
+        i++;
+    return (i);
+}
+
+int first_last()
+{
+    int i;
+    int e;
+    
+    i = -1;
+    while(paths_struct.pars.map[0][++i])
+    {
+        if(paths_struct.pars.map[0][i] == '0' || paths_struct.pars.map[0][i] == paths_struct.pars.pos)
+            return (FALSE);
+    }
+    e = len_map() - 1;
+    i = -1;
+    while(paths_struct.pars.map[e][++i])
+    {
+        if(paths_struct.pars.map[e][i] == '0' || paths_struct.pars.map[e][i] == paths_struct.pars.pos)
+            return (FALSE);
+    }
+    return (TRUE);
+}
+
+int close_(char c)
+{
+    int i, j;
+    for(i = 1 ; i < len_map() - 1 ; i++)
+    {
+        for(j = 1; (int)strlen(paths_struct.pars.map[i]) - 1 ; j++)
+        {
+            if(paths_struct.pars.map[i][j] == c)
+            {
+                if(paths_struct.pars.map[i - 1][j] != ' ' && paths_struct.pars.map[i - 1][j] != c &&
+                    paths_struct.pars.map[i + 1][j] != ' ' && paths_struct.pars.map[i + 1][j] != c &&
+                    paths_struct.pars.map[i][j - 1] != ' ' && paths_struct.pars.map[i][j - 1] != c &&
+                    paths_struct.pars.map[i][j + 1] != ' ' && paths_struct.pars.map[i][j + 1] != c)
+                    return (TRUE);
+                else
+                    return (FALSE);
+            }
+        }
+    }
+    return (FALSE);
+}
 
 int map_(char *str)
 {
@@ -705,8 +753,10 @@ int map_(char *str)
     if(!content_())
         return (FALSE);
     position_();
-    
-    
+    if(!first_last())
+        return (FALSE);
+    if(!close_(paths_struct.pars.pos) || !close_('0'))
+        return (FALSE);
     return (TRUE);
     
 }
