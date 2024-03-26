@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/25 23:27:02 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:33:57 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -532,16 +532,21 @@ int accessible()
 //<<============================check-access======================>>
 //<<============================check-map======================>>
 
-int whitespaces_(const char *str)
+int whitespaces_(char *str)
 {
-    while(*str)
-    {
-        if(!ft_isspace((unsigned char) *str))
+    if (str == NULL)
+        // Handle NULL pointer
+        return FALSE;
+
+    int i = -1;
+
+    while (str[++i])
+        if (!ft_isspace(str[i]))
             return TRUE;
-        str++;
-    }       
+
     return FALSE;
 }
+
 
 int skip_(char **file)
 {
@@ -555,13 +560,15 @@ int skip_(char **file)
     {
 
         if(whitespaces_(file[i]))
+        {
             cnt++;
+    }
         else
             break;
     }
-    printf("lalalalalala\n");
     while(file[i] && whitespaces_(file[i]))
         i++;
+
     return (i);
 }
 
@@ -598,6 +605,7 @@ void take_maps(char **file, char *str)
 
 int empty_()
 {
+
     int i;
 
     i = 0;
@@ -751,14 +759,16 @@ int map_(char *str)
     if(!empty_())
         return (FALSE);
     if(!content_())
+    {
+                            printf("lalalalalala\n");
         return (FALSE);
+    }
     position_();
     if(!first_last())
         return (FALSE);
     if(!close_(paths_struct.pars.pos) || !close_('0'))
         return (FALSE);
     return (TRUE);
-    
 }
 
 //<<============================check-map======================>>
