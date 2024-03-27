@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/25 23:17:44 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/27 01:12:20 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct s_paths {
     char    **f;
     char    **c;
     char    **map;
-    long    player_row;
-    long    player_col;
+    	int		x;
+	int		y;
     char    pos;
 } t_paths;
 
