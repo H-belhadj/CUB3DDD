@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/27 17:08:44 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/27 20:10:17 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -764,11 +764,13 @@ int	is_closed(char c)
 {
 	int	i;
 	int	j;
-
-	i = 0;
-	while (paths_struct.pars.map[++i] && i < map_len())
+	int len_map = map_len();
+	// printf("len_map  %d \n", len_map);
+	
+	i = -1;
+	while (paths_struct.pars.map[++i] && i < len_map)
 	{
-		printf("%s \n", paths_struct.pars.map[i]);
+		// printf("%s \n", paths_struct.pars.map[i]);
 		j = -1;
 		while (paths_struct.pars.map[i][++j])
 		{
@@ -814,9 +816,9 @@ int	checker_map1(char *str)
 	player_pos();
 	if (!check_first_last())
 		return (0);
-	if (!is_closed(paths_struct.pars.pos) || !is_closed('0'))
+	if (!is_closed(paths_struct.pars.pos))
 		return (0);
-    printf("map is good\n");
+    printf("TEST 5: good💪\n");
 	return (1);
 }
 
@@ -825,17 +827,17 @@ int	checker_map1(char *str)
 
 int parsing(char *str)
 {
-    // if (!is_cub(str))
-    //     return (printf("TEST 1: BAD\n"), FALSE);
-    // sleep(1);
-    // if (!check_line(str))
-    //     return (printf("TEST 2: BAD\n"), FALSE);
-    // sleep(1);
-    // if (!check_colors())
-    //     return (printf("TEST 3: BAD\n"), FALSE);
-    // sleep(1);
-    // if(!accessible())
-    //     return (printf("TEST 4: BAD\n"), FALSE);
+    if (!is_cub(str))
+        return (printf("TEST 1: BAD\n"), FALSE);
+    sleep(1);
+    if (!check_line(str))
+        return (printf("TEST 2: BAD\n"), FALSE);
+    sleep(1);
+    if (!check_colors())
+        return (printf("TEST 3: BAD\n"), FALSE);
+    sleep(1);
+    if(!accessible())
+        return (printf("TEST 4: BAD\n"), FALSE);
     sleep(1);
     if(!checker_map1(str))
         return (printf("TEST 5: BAD\n"), FALSE);
