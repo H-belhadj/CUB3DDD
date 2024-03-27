@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:54:41 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/27 20:10:17 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/27 20:28:20 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_strncmp( char *s1,  char *s2, size_t n)
 	str2 = (unsigned char *)s2;
 	i = 0;
 	if (n == 0)
-		return (0);
+		return (FALSE);
 	while (str1[i] && str2[i] && i < n - 1 && str1[i] == str2[i])
 		i++;
 	return (str1[i] - str2[i]);
@@ -550,8 +550,8 @@ int	check_existance(char c)
 		}
 	}
 	if (!count)
-		return (0);
-	return (1);
+		return (FALSE);
+	return (TRUE);
 }
 
 int	player_num(void)
@@ -573,7 +573,7 @@ int	player_num(void)
 		}
 	}
 	if (c != 1)
-		return (0);
+		return (FALSE);
 	return (1);
 }
 
@@ -592,15 +592,15 @@ int	check_content(void)
 				&& paths_struct.pars.map[i][j] != '\n' && paths_struct.pars.map[i][j] != 'N'
 				&& paths_struct.pars.map[i][j] != 'S' && paths_struct.pars.map[i][j] != 'E'
 				&& paths_struct.pars.map[i][j] != 'W' && paths_struct.pars.map[i][j] != ' ')
-				return (0);
+				return (FALSE);
 		}
 	}
 	if (!player_num())
-		return (0);
+		return (FALSE);
 	if (!check_existance('0') || !check_existance('1')
 		|| !check_existance('\n'))
-		return (0);
-	return (1);
+		return (FALSE);
+	return (TRUE);
 }
 
 
@@ -635,7 +635,7 @@ int	all_white(char *str)
 	while (str[++i])
 	{
 		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
-			return (0);
+			return (FALSE);
 	}
 	return (1);
 }
@@ -677,9 +677,9 @@ int	dot_cub(char *str)
 		|| open(str, O_RDWR) < 0)
 	{
 		printf("Error\nfile_err\n");
-		return (0);
+		return (FALSE);
 	}
-	return (1);
+	return (TRUE);
 }
 
 
@@ -703,7 +703,7 @@ int	check_first_last(void)
 	{
 		if (paths_struct.pars.map[0][i] == '0'
 			|| paths_struct.pars.map[0][i] == paths_struct.pars.pos)
-			return (0);
+			return (FALSE);
 	}
 	e = map_len() - 1;
 	i = -1;
@@ -711,7 +711,7 @@ int	check_first_last(void)
 	{
 		if (paths_struct.pars.map[e][i] == '0'
 			|| paths_struct.pars.map[e][i] == paths_struct.pars.pos)
-			return (0);
+			return (FALSE);
 	}
 	return (1);
 }
@@ -785,11 +785,11 @@ int	is_closed(char c)
 					|| j + 1 >= (int)strlen(paths_struct.pars.map[i - 1]))
 					|| (paths_struct.pars.map[i + 1][j] == ' '
 					|| j + 1 >= (int)strlen(paths_struct.pars.map[i + 1])))
-					return (0);
+					return (FALSE);
 			}
 		}
 	}
-	return (1);
+	return (TRUE);
 }
 
 int	empty_line(void)
@@ -800,9 +800,9 @@ int	empty_line(void)
 	while (paths_struct.pars.map[++i])
 	{
 		if (all_white(paths_struct.pars.map[i]))
-			return (0);
+			return (FALSE);
 	}
-	return (1);
+	return (TRUE);
 }
 
 int	checker_map1(char *str)
@@ -810,16 +810,16 @@ int	checker_map1(char *str)
 	// (void)str;
 	put_map(read_line(str), str);
 	if (!empty_line())
-		return (0);
+		return (FALSE);
 	if (!check_content())
-		return (0);
+		return (FALSE);
 	player_pos();
 	if (!check_first_last())
-		return (0);
+		return (FALSE);
 	if (!is_closed(paths_struct.pars.pos))
-		return (0);
+		return (FALSE);
     printf("TEST 5: good💪\n");
-	return (1);
+	return (TRUE);
 }
 
 //<<============================check-map======================>>
@@ -828,18 +828,20 @@ int	checker_map1(char *str)
 int parsing(char *str)
 {
     if (!is_cub(str))
-        return (printf("TEST 1: BAD\n"), FALSE);
-    sleep(1);
+        return (printf("TEST 1: BAD🆘\n"), FALSE);
+    usleep(500000);
     if (!check_line(str))
-        return (printf("TEST 2: BAD\n"), FALSE);
-    sleep(1);
+        return (printf("TEST 2: BAD🆘\n"), FALSE);
+    usleep(500000);
     if (!check_colors())
-        return (printf("TEST 3: BAD\n"), FALSE);
-    sleep(1);
+        return (printf("TEST 3: BAD🆘\n"), FALSE);
+    usleep(500000);
     if(!accessible())
-        return (printf("TEST 4: BAD\n"), FALSE);
-    sleep(1);
+        return (printf("TEST 4: BAD🆘\n"), FALSE);
+    usleep(500000);
     if(!checker_map1(str))
-        return (printf("TEST 5: BAD\n"), FALSE);
+        return (printf("TEST 5: BAD🆘\n"), FALSE);
+	usleep(500000);
+	printf("ZOOOOOT ALL THE TESTS IS GOOD 9ATAAAAAA3 ✅\n");
     return (TRUE);
 }
