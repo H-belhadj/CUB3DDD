@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 NAME = cub3d
-SOURCES = get_next_line.c get_next_line_utils.c main.c parcing.c
+SOURCES = get_next_line.c get_next_line_utils.c main.c parcing.c is_cub.c read.c free_.c extract-6.c cheack-paths.c cheack-colors.c
 OBJECTS = $(SOURCES:.c=.o)
 # LIBS =  -lmlx -framework OpenGL -framework AppKit
 %.o : %.c

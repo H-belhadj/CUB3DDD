@@ -6,7 +6,7 @@
 /*   By: hbelhadj <hbelhadj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:41:23 by hbelhadj          #+#    #+#             */
-/*   Updated: 2024/03/27 01:12:20 by hbelhadj         ###   ########.fr       */
+/*   Updated: 2024/03/28 22:41:52 by hbelhadj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,19 @@ t_value     paths_struct;
 
 
 int is_cub(char *str);
+int	ft_strncmp( char *s1,  char *s2, size_t n);
+char	*ft_strdup(char *s);
+void    *free_(char **file);
 char **read_line(char*str);
+char **extract_6(char **file);
+int line_number(char *str);
+char	*ft_substr(char *s, unsigned int start, size_t len);
+int ex_color(char **line);
+int paths(char **line);
+char *str_(char *str);
 int check_line(char *str);
+char *rest_(char *line, char *str);
+char *find_(char **line, char *target);
 int parsing(char *str);
 int accessible();
 
